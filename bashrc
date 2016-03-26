@@ -1,0 +1,34 @@
+##############################################################################
+#   Filename: bashrc                                                         #
+# Maintainer: Ibrahim Ahmed <abeahmed2@gmail.com>                            #
+#        URL: http://github.com/atbe/dotfiles                                #
+#                                                                            #
+#                                                                            #
+# Sections:                                                                  #
+#   01. General ................. General bash behavior                      #
+#   02. Aliases ................. My custom aliases                          #
+##############################################################################
+
+# System detection script
+if_os () { [[ $OSTYPE == *$1* ]]; }
+if_nix () { 
+    case "$OSTYPE" in
+        *linux*|*hurd*|*msys*|*cygwin*|*sua*|*interix*) sys="gnu";;
+        *bsd*|*darwin*) sys="bsd";;
+        *sunos*|*solaris*|*indiana*|*illumos*|*smartos*) sys="sun";;
+    esac
+    [[ "${sys}" == "$1" ]];
+}
+#
+
+##############################################################################
+# 01. General                                                                #
+##############################################################################
+
+export EDITOR='vim'                  				  # Make default editor VIM
+
+##############################################################################
+# 02. Aliases                                                                #
+##############################################################################
+
+if_os darwin && alias vim="/usr/local/bin/mvim -v"    # Alias for macvim (Mac only)
