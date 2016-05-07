@@ -4,6 +4,20 @@
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
+# System detection script
+if_os () { [[ $OSTYPE == *$1* ]]; }
+if_nix () { 
+	case "$OSTYPE" in
+		*linux*|*hurd*|*msys*|*cygwin*|*sua*|*interix*) sys="gnu";;
+		*bsd*|*darwin*) sys="bsd";;
+		*sunos*|*solaris*|*indiana*|*illumos*|*smartos*) sys="sun";;
+	esac
+	[[ "${sys}" == "$1" ]];
+}
+#
+
+echo "You are running $OSTYPE"
+
 ########## Variables
 
 dir=~/dotfiles                    # dotfiles directory
@@ -24,8 +38,9 @@ echo "done"
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
-    echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ~/.$file ~/dotfiles_old/
-    echo "Creating symlink to $file in home directory."
-    ln -s $dir/$file ~/.$file
+	echo "Moving any existing dotfiles from ~ to $olddir"
+	mv ~/.$file ~/dotfiles_old/
+	echo "Creating symlink to $file in home directory."
+	if_os linux && ln -s $dir/linux/$file ~/.$file && echo "LINUX"
+	if_os darwin && ln -s $dir/mac/$file ~/.$file && echo "MAC"
 done

@@ -32,3 +32,9 @@ export EDITOR='vim'                  				  # Make default editor VIM
 ##############################################################################
 
 if_os darwin && alias vim="/usr/local/bin/mvim -v"    # Alias for macvim (Mac only)
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias fu="read -rsp $'positive(+)?\n' -n1 key && echo "Careful" && rm -rf" #delete
