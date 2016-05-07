@@ -30,7 +30,8 @@ set background=dark
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pathogen first because it is a really short setup lol
 runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+" Where we put our self-maintained plugins
+execute pathogen#infect('bundle/{}', '~/prams/vim/bundle/{}')
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -49,7 +50,7 @@ Plugin 'bling/vim-airline'
 " vim-airline-themes
 Plugin 'vim-airline/vim-airline-themes'
 " YCM
-Plugin 'valloric/youcompleteme', {'ycm': '/home/abe/Dropbox/workspace/vim/bundle/YouCompleteMe_linux'}
+"Plugin 'valloric/youcompleteme' 
 " indentline
 Plugin 'yggdroot/indentline'
 " The NERD Commenter
@@ -87,7 +88,7 @@ filetype plugin indent on    " required
 let g:airline_theme='molokai'       " Set theme to JellyBeans
 set laststatus=2                       " Always show status bar
 " YCM
-let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe_linux/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf = "~/prams/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Keymapping                                                             "
