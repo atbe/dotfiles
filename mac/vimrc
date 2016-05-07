@@ -86,7 +86,7 @@ let g:ycm_global_ycm_extra_conf = "~/prams/vim/bundle/YouCompleteMe/third_party/
 " Tab Managment Settings
 nnoremap th  :tabfirst<CR>
 nnoremap tk  :tabnext<CR>
-nnoremap tj  :tabprev<CR>YouCompleteMe_mac
+nnoremap tj  :tabprev<CR>
 nnoremap tl  :tablast<CR>
 nnoremap tt  :tabedit<Space>
 nnoremap tn  :tabnew<Space>
