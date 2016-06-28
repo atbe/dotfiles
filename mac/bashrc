@@ -38,3 +38,9 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias fu="read -rsp $'positive(+)?\n' -n1 key && echo "Careful" && rm -rf" #delete
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Source profile dot file
+source ~/.profile
+
