@@ -20,13 +20,12 @@ set number	        	          " Set line numbers on by default.
 syntax on		                  " Set Syntax on by default.
 set t_Co=256                      " Make the colors purty.
 set ls=2		                  " Show full file path always
-set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab
+set tabstop=4 tabstop=4 shiftwidth=4 expandtab
 set mouse=a                       " Turn that mouse on
 set shell=/bin/bash               " Needed to keep Vundle behaved
 set background=dark
-
+set autochdir                     " Always set PWD to file directory
 let $PATH = '/usr/local/bin:'.$PATH
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -51,8 +50,8 @@ Plugin 'scrooloose/nerdTree'
 Plugin 'bling/vim-airline'
 " vim-airline-themes
 Plugin 'vim-airline/vim-airline-themes'
-" YCM
-Plugin 'valloric/youcompleteme'
+" YCm
+"Plugin 'valloric/youcompleteme'
 " indentline
 Plugin 'yggdroot/indentline'
 " The NERD Commenter
@@ -67,6 +66,16 @@ Plugin 'tpope/vim-obsession'
 Plugin 'easymotion/vim-easymotion'
 " Auto-pairs
 Plugin 'jiangmiao/auto-pairs'
+" vim-slim
+Plugin 'slim-template/vim-slim'
+" Kotlin higlighting
+Plugin 'udalov/kotlin-vim'
+" javacomplete2
+Plugin 'artur-shaik/vim-javacomplete2'
+" jedi-vim
+Plugin 'davidhalter/jedi-vim'
+" vim-gradle
+Plugin 'tfnico/vim-gradle'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -76,9 +85,13 @@ filetype plugin indent on    " required
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 let g:airline_theme='molokai'       " Set theme to JellyBeans
-set laststatus=2                       " Always show status bar
+set laststatus=2                    " Always show status bar
 " YCM
 let g:ycm_global_ycm_extra_conf = "~/prams/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+" javacomplete
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" jedi-vim open definitions in new tabs
+let g:jedi#use_tabs_not_buffers = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Keymapping                                                             "
@@ -93,4 +106,5 @@ nnoremap tn  :tabnew<Space>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 
-colorscheme eink
+"colorscheme eink
+colorscheme Chasing_Logic 
