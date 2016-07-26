@@ -22,7 +22,7 @@ echo "You are running $OSTYPE"
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="vimrc tmux.conf bashrc"    # list of files/folders to symlink in homedir
+files="vimrc tmux.conf bashrc config.fish"    # list of files/folders to symlink in homedir
 
 ##########
 
