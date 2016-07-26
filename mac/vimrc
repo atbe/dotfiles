@@ -26,6 +26,7 @@ set shell=/bin/bash               " Needed to keep Vundle behaved
 set background=dark
 set autochdir                     " Always set PWD to file directory
 let $PATH = '/usr/local/bin:'.$PATH
+set backspace=2 " make backspace work like most other apps
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -105,6 +106,14 @@ nnoremap tt  :tabedit<Space>
 nnoremap tn  :tabnew<Space>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
+
+map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
+
+" For local replace
+ nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
+
+" " For global replace
+ nnoremap gR gD:%s/<C-R>///gc<left><left><left>"}]
 
 "colorscheme eink
 colorscheme Chasing_Logic 
