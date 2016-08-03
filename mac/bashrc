@@ -26,6 +26,8 @@ if_nix () {
 ##############################################################################
 
 export EDITOR='vim'                  				  # Make default editor VIM
+PS1="$PS1\n"                                          # Make cursor start on newline
+
 
 ##############################################################################
 # 02. Aliases                                                                #
@@ -44,3 +46,10 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # Source profile dot file
 source ~/.profile
 
+# jdk switching
+alias setJdk6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
+alias setJdk7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+alias setJdk8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+
+# go go
+export GOPATH=$HOME/go
