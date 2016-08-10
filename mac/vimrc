@@ -8,7 +8,7 @@
 "   01. General ................. General Vim behavior                       "
 "   02. Vundle/Pathogen .................. Setup Vundle&Pathogen             "
 "   03. Plugin Mods ............. Modifications made to plugins              "
-"   04. Keymapping ............. All the different key mappings              " 
+"   04. Keymapping ............. All the different key mappings              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -20,13 +20,14 @@ set number	        	          " Set line numbers on by default.
 syntax on		                  " Set Syntax on by default.
 set t_Co=256                      " Make the colors purty.
 set ls=2		                  " Show full file path always
-set tabstop=4 tabstop=4 shiftwidth=4 expandtab
+set tabstop=2 tabstop=2 shiftwidth=2 expandtab
 set mouse=a                       " Turn that mouse on
 set shell=/bin/bash               " Needed to keep Vundle behaved
-set background=dark
 set autochdir                     " Always set PWD to file directory
 let $PATH = '/usr/local/bin:'.$PATH
-set backspace=2 " make backspace work like most other apps
+set backspace=2                   " make backspace work like most other apps
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_working_path_mode = 'ra'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -77,7 +78,22 @@ Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'davidhalter/jedi-vim'
 " vim-gradle
 Plugin 'tfnico/vim-gradle'
-
+" inc search
+Plugin 'haya14busa/incsearch.vim'
+" vim-perl
+Plugin 'vim-perl/vim-perl'
+" NERDTree Tabs
+Bundle 'jistr/vim-nerdtree-tabs'
+" indent guidlines
+Plugin 'nathanaelkane/vim-indent-guides'
+" rename
+Plugin 'danro/rename.vim'
+" trailing whitespace
+Plugin 'bronson/vim-trailing-whitespace'
+" ctrlp ... omg/thisislife
+Plugin 'kien/ctrlp.vim'
+" vimagit
+Plugin 'jreybert/vimagit'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -116,4 +132,5 @@ map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
  nnoremap gR gD:%s/<C-R>///gc<left><left><left>"}]
 
 "colorscheme eink
-colorscheme Chasing_Logic 
+colorscheme Chasing_Logic
+set background=dark
