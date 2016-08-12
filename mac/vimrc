@@ -28,6 +28,8 @@ let $PATH = '/usr/local/bin:'.$PATH
 set backspace=2                   " make backspace work like most other apps
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_working_path_mode = 'ra'
+set conceallevel=0
+let g:ctrlp_switch_buffer = 'Et'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -94,6 +96,12 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'kien/ctrlp.vim'
 " vimagit
 Plugin 'jreybert/vimagit'
+" tabular
+Plugin 'godlygeek/tabular'
+" vim markdown
+Plugin 'plasticboy/vim-markdown'
+" matchtag
+Plugin 'gregsexton/matchtag'
 call vundle#end()            " required
 filetype plugin indent on    " required
 

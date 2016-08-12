@@ -33,9 +33,8 @@ PS1="$PS1\n"                                          # Make cursor start on new
 # 02. Aliases                                                                #
 ##############################################################################
 
-if_os darwin && alias vim="/usr/local/bin/mvim -v"    # Alias for macvim (Mac only)
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -alG'
 alias la='ls -A'
 alias l='ls -CF'
 

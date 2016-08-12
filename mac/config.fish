@@ -32,3 +32,9 @@ source $OMF_PATH/init.fish
 #
 # brew command-not-found
 brew command command-not-found-init > /dev/null; and . (brew command-not-found-init)
+
+# source the aliases.fish config
+. "$HOME/.config/fish/aliases.fish"
+
+# autojump config
+ [ -f /usr/local/share/autojump/autojump.fish  ]; and source /usr/local/share/autojump/autojump.fish
