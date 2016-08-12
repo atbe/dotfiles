@@ -20,10 +20,16 @@ set number	        	        " Set line numbers on by default.
 syntax on		                  " Set Syntax on by default.
 set t_Co=256                  " Make the colors purty.
 set ls=2		                  " Show full file path always
-set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab
-set mouse=a                   " Turn that mouse on
-set shell=/bin/bash
-set background=dark
+set tabstop=2 tabstop=2 shiftwidth=2 expandtab
+set mouse=a                       " Turn that mouse on
+set shell=/bin/bash               " Needed to keep Vundle behaved
+set autochdir                     " Always set PWD to file directory
+let $PATH = '/usr/local/bin:'.$PATH
+set backspace=2                   " make backspace work like most other apps
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_working_path_mode = 'ra'
+set conceallevel=0
+let g:ctrlp_switch_buffer = 'Et'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -57,7 +63,7 @@ Plugin 'yggdroot/indentline'
 Plugin 'scrooloose/nerdcommenter'
 " Vim colorschemes
 Plugin 'flazz/vim-colorschemes'
-" JSON readability
+" JSON.vim
 Plugin 'elzr/vim-json'
 " obsession
 Plugin 'tpope/vim-obsession'
@@ -65,21 +71,40 @@ Plugin 'tpope/vim-obsession'
 Plugin 'easymotion/vim-easymotion'
 " Auto-pairs
 Plugin 'jiangmiao/auto-pairs'
+" vim-slim
+Plugin 'slim-template/vim-slim'
+" Kotlin higlighting
+Plugin 'udalov/kotlin-vim'
+" javacomplete2
+Plugin 'artur-shaik/vim-javacomplete2'
+" jedi-vim
+Plugin 'davidhalter/jedi-vim'
+" vim-gradle
+Plugin 'tfnico/vim-gradle'
+" inc search
+Plugin 'haya14busa/incsearch.vim'
+" vim-perl
+Plugin 'vim-perl/vim-perl'
+" NERDTree Tabs
+Bundle 'jistr/vim-nerdtree-tabs'
+" indent guidlines
+Plugin 'nathanaelkane/vim-indent-guides'
+" rename
+Plugin 'danro/rename.vim'
+" trailing whitespace
+Plugin 'bronson/vim-trailing-whitespace'
+" ctrlp ... omg/thisislife
+Plugin 'kien/ctrlp.vim'
+" vimagit
+Plugin 'jreybert/vimagit'
+" tabular
+Plugin 'godlygeek/tabular'
+" vim markdown
+Plugin 'plasticboy/vim-markdown'
+" matchtag
+Plugin 'gregsexton/matchtag'
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Plugin Mods                                                            "
@@ -89,6 +114,10 @@ let g:airline_theme='molokai'       " Set theme to JellyBeans
 set laststatus=2                       " Always show status bar
 " YCM
 let g:ycm_global_ycm_extra_conf = "~/prams/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+" javacomplete
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" jedi-vim open definitions in new tabs
+let g:jedi#use_tabs_not_buffers = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Keymapping                                                             "
@@ -103,6 +132,7 @@ nnoremap tn  :tabnew<Space>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 
-" color scheme
-colorscheme eink 
+map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
 
+colorscheme Chasing_Logic
+set background=dark
