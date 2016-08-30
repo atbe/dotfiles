@@ -1,0 +1,27 @@
+[user]
+    name = @be
+    email = abeahmed2@gmail.com
+[include]
+    path=/Users/abe/.bm_git_config/gitconfig
+[merge]
+    tool = diffmerge
+[mergetool "diffmerge"]
+    cmd = diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+    trustExitCode = true
+[mergetool]
+    keepBackup = false
+[diff]
+    tool = diffmerge
+[difftool "diffmerge"]
+    cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+
+# pandoc diff support when requested
+[diff "pandoc"]
+    textconv=pandoc --to=markdown
+    prompt = false
+# wdiff = word diff
+[alias]
+    wdiff = diff --word-diff=color --unified=1
+    st = status
+    stm = status --untracked=no
+    stfu = status --untracked=no
