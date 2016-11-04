@@ -30,7 +30,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_working_path_mode = 'ra'
 set conceallevel=0
 let g:ctrlp_switch_buffer = 'Et'
-set expandtab "tabs as spaces by default
+set expandtab                     "tabs as spaces by default
+set relativenumber                " o man.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -56,7 +57,7 @@ Plugin 'bling/vim-airline'
 " vim-airline-themes
 Plugin 'vim-airline/vim-airline-themes'
 " YCm
-"Plugin 'valloric/youcompleteme'
+Plugin 'valloric/youcompleteme'
 " indentline
 Plugin 'yggdroot/indentline'
 " The NERD Commenter
@@ -116,10 +117,14 @@ filetype plugin indent on    " required
 " airline
 let g:airline_theme='molokai'       " Set theme to JellyBeans
 set laststatus=2                    " Always show status bar
+
 " YCM
-let g:ycm_global_ycm_extra_conf = "~/prams/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+"let g:loaded_youcompleteme = 1
+
 " javacomplete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 " jedi-vim open definitions in new tabs
 let g:jedi#use_tabs_not_buffers = 1
 
@@ -133,6 +138,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" python3
+let g:syntastic_python_python_exe = 'python3'
 
 " vim-markdown
 let g:vim_markdown_conceal = 0 "stop concealing
