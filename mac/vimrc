@@ -9,6 +9,7 @@
 "   02. Vundle/Pathogen .................. Setup Vundle&Pathogen             "
 "   03. Plugin Mods ............. Modifications made to plugins              "
 "   04. Keymapping ............. All the different key mappings              "
+"   05. Colorscheme ............. Colorscheme configurations                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -18,7 +19,7 @@ set nocompatible                  " be iMproved, required
 filetype off                      " required
 set number	        	          " Set line numbers on by default.
 syntax on		                  " Set Syntax on by default.
-set t_Co=256                      " Make the colors purty.
+"set t_Co=256                      " Make the colors purty.
 set ls=2		                  " Show full file path always
 set tabstop=4 tabstop=4 shiftwidth=4 expandtab
 set mouse=a                       " Turn that mouse on
@@ -32,6 +33,8 @@ set conceallevel=0
 let g:ctrlp_switch_buffer = 'Et'
 set expandtab                     "tabs as spaces by default
 set relativenumber                " o man.
+set history=1000                  " what can I say, I like to do
+set undolevels=1000                  " what can I say, I like to do
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -108,6 +111,15 @@ Plugin 'gregsexton/matchtag'
 Plugin 'airblade/vim-gitgutter'
 " syntasticccc
 Plugin 'scrooloose/syntastic'
+" vim gogogo
+Plugin 'fatih/vim-go'
+" tagbar
+Plugin 'majutsushi/tagbar'
+" base16
+Plugin 'chriskempson/base16-vim'
+" tag browser
+Plugin 'taglist.vim'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -140,10 +152,20 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " python3
-let g:syntastic_python_python_exe = 'python3'
+"let g:syntastic_python_python_exe = 'python3'
 
 " vim-markdown
 let g:vim_markdown_conceal = 0 "stop concealing
+
+" base16
+let base16colorspace=256  " Access colors present in 256 colorspace
+
+" Airline Configuration
+" " .....................................
+let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
+let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
+let g:airline#extensions#branch#enabled = 1 " Enable branches
+let g:airline_theme='base16'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Keymapping                                                             "
@@ -158,14 +180,41 @@ nnoremap tn  :tabnew<Space>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 
-map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
+"map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
 
 " For local replace
- nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
+nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
 
-" " For global replace
- nnoremap gR gD:%s/<C-R>///gc<left><left><left>"}]
+" For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>"}]
 
+" With a map leader it's possible to do extra key combinations
+" " like <leader>w saves the current file
+"let mapleader = " " "Leader is the space key
+"let g:mapleader = " "
+" " easier write
+"nmap <leader>w :w!<cr>
+" easier quit
+"nmap <leader>q :q<cr>}"
+
+" force myself to use hjkl
+nnoremap <up>    <nop>
+nnoremap <down>  <nop>
+nnoremap <left>  <nop>
+nnoremap <right> <nop>
+inoremap <up>    <nop>
+inoremap <down>  <nop>
+inoremap <left>  <nop>
+inoremap <right> <nop>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 05. ColorScheme                                                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "colorscheme eink
-colorscheme Chasing_Logic
+"colorscheme Chasing_Logic
+colorscheme base16-default-dark
 set background=dark
+
+" customize the colorscheme
+highlight Comment ctermfg=white " comments are unreadable otherwise
+hi MatchParen cterm=none ctermbg=white ctermfg=red " braces are almost hidden otherwise
