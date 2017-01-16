@@ -100,7 +100,7 @@ source $ZSH/oh-my-zsh.sh
 # Alias'
 #################################################
 alias gs="git status"
-alias ti="ls -latr --full-time"
+alias ti="ls -latrT"
 
 #################################################
 # Exports
