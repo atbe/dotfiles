@@ -105,8 +105,17 @@ source $ZSH/oh-my-zsh.sh
 #################################################
 # Alias'
 #################################################
+# git alias'
 alias gs="git status"
-alias ti="ls -latrT"
+alias gd="git diff"
+alias gaa="git add -A"
+
+alias ti="ls -latrTh"
+
+alias arctic="ssh ahmedibr@arctic.cse.msu.edu"
+alias black="ssh ahmedibr@black.cse.msu.edu"
+alias cse410="ssh ahmedibr@cse410.cse.msu.edu"
+alias hpcc_g="ssh ahmedibr@gateway.hpcc.msu.edu"
 
 #################################################
 # Exports
