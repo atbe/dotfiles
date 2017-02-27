@@ -1,8 +1,8 @@
 [user]
     name = @be
-    email = abeahmed2@gmail.com
+	email = abeahmed2@gmail.com
 [include]
-    path=/Users/abe/.bm_git_config/gitconfig
+    ;path=/Users/abe/.bm_git_config/gitconfig
 [merge]
     tool = diffmerge
 [mergetool "diffmerge"]
@@ -25,3 +25,8 @@
     st = status
     stm = status --untracked=no
     stfu = status --untracked=no
+	lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d %Cgreen%cr %Cblue%an%Creset %s' --date=relative --all
+[core]
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+	safecrlf = true
