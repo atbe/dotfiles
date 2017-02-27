@@ -99,8 +99,20 @@ source $ZSH/oh-my-zsh.sh
 #################################################
 # Alias'
 #################################################
+#
+# git alias'
 alias gs="git status"
-alias ti="ls -latrT"
+alias gd="git diff"
+alias gaa="git add -A"
+
+alias ti="ls -latrTh"
+alias kill_icdd="kill -9 \$(pidof icdd) \$(pidof printuitool)"
+
+# ssh alias'
+alias arctic="ssh ahmedibr@arctic.cse.msu.edu"
+alias black="ssh ahmedibr@black.cse.msu.edu"
+alias cse410="ssh ahmedibr@cse410.cse.msu.edu"
+alias hpcc_g="ssh ahmedibr@gateway.hpcc.msu.edu"
 
 #################################################
 # Exports
@@ -131,3 +143,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH
+
+# antigen
+# source /usr/local/share/antigen/antigen.zsh
+
+# fuck
+eval $(thefuck --alias)
