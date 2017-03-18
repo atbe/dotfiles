@@ -15,110 +15,69 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 01. General                                                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible                  " be iMproved, required
-filetype off                      " required
-set number	        	          " Set line numbers on by default.
-syntax on		                  " Set Syntax on by default.
-"set t_Co=256                      " Make the colors purty.
-set ls=2		                  " Show full file path always
-set tabstop=4 tabstop=4 shiftwidth=4 expandtab
-set mouse=a                       " Turn that mouse on
-set shell=/bin/bash               " Needed to keep Vundle behaved
-set autochdir                     " Always set PWD to file directory
-let $PATH = '/usr/local/bin:'.$PATH
-set backspace=2                   " make backspace work like most other apps
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-let g:ctrlp_working_path_mode = 'ra'
-set conceallevel=0
-let g:ctrlp_switch_buffer = 'Et'
-set expandtab                     "tabs as spaces by default
-set relativenumber                " o man.
-set history=1000                  " what can I say, I like to do
-set undolevels=1000                  " what can I say, I like to do
+set nocompatible                               " be iMproved, required
+filetype off                                   " required
+set number                                     " Set line numbers on by default.
+syntax on                                      " Set Syntax on by default.
+set t_Co=256                                   " Make the colors purty.
+set ls=2                                       " Show full file path always
+set tabstop=4 tabstop=4 shiftwidth=4 expandtab " tabs as spaces, all size 4
+set mouse=a                                    " Turn that mouse on
+set shell=/bin/bash                            " Needed to keep Vundle behaved
+set autochdir                                  " Always set PWD to file directory
+set backspace=2                                " make backspace work like most other apps
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip       " MacOSX/Linux
+"set relativenumber                            " o man.
+set history=100                                " what can I say, I like to undo
+set undolevels=100                             " what can I say, I like to undo
+set showcmd                                    " Shows command at the bottom right
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pathogen first because it is a really short setup lol
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
-execute pathogen#infect('bundle/{}', '~/prams/vim/bundle/{}')
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+
+" https://github.com/VundleVim/Vundle.vim
 Plugin 'VundleVim/Vundle.vim'
-" Vundle Packages: "
-" Fugitive
-Plugin 'tpope/vim-fugitive'
-" NERDTree
-Plugin 'scrooloose/nerdTree'
-" vim-airline
+" Vundle Packages:
+"
+" vim-airline https://github.com/vim-airline/vim-airline
 Plugin 'bling/vim-airline'
-" vim-airline-themes
+"
+" vim-airline-themes https://github.com/vim-airline/vim-airline-themes
 Plugin 'vim-airline/vim-airline-themes'
+"
 " YCm
 Plugin 'valloric/youcompleteme'
-" indentline
+"
+" indentline https://github.com/Yggdroot/indentLine
 Plugin 'yggdroot/indentline'
-" The NERD Commenter
+"
+" The NERD Commenter https://github.com/scrooloose/nerdcommenter
 Plugin 'scrooloose/nerdcommenter'
-" Vim colorschemes
-Plugin 'flazz/vim-colorschemes'
-" JSON.vim
-Plugin 'elzr/vim-json'
-" obsession
-Plugin 'tpope/vim-obsession'
-" EasyMotion
-Plugin 'easymotion/vim-easymotion'
-" Auto-pairs
-Plugin 'jiangmiao/auto-pairs'
-" vim-slim
-Plugin 'slim-template/vim-slim'
-" Kotlin higlighting
-Plugin 'udalov/kotlin-vim'
-" javacomplete2
-Plugin 'artur-shaik/vim-javacomplete2'
-" jedi-vim
-Plugin 'davidhalter/jedi-vim'
-" vim-gradle
-Plugin 'tfnico/vim-gradle'
-" inc search
-Plugin 'haya14busa/incsearch.vim'
-" vim-perl
-Plugin 'vim-perl/vim-perl'
-" NERDTree Tabs
-Bundle 'jistr/vim-nerdtree-tabs'
-" indent guidlines
-Plugin 'nathanaelkane/vim-indent-guides'
+"
 " rename
 Plugin 'danro/rename.vim'
+"
 " trailing whitespace
 Plugin 'bronson/vim-trailing-whitespace'
-" ctrlp ... omg/thisislife
+"
+" ctrlp /thisislife
 Plugin 'kien/ctrlp.vim'
-" vimagit
-Plugin 'jreybert/vimagit'
+"
 " tabular
 Plugin 'godlygeek/tabular'
-" vim markdown
-Plugin 'plasticboy/vim-markdown'
-" matchtag
-Plugin 'gregsexton/matchtag'
+"
 " gitgutter
 Plugin 'airblade/vim-gitgutter'
-" syntasticccc
-Plugin 'scrooloose/syntastic'
+"
 " vim gogogo
 Plugin 'fatih/vim-go'
-" tagbar
-Plugin 'majutsushi/tagbar'
+"
 " base16
 Plugin 'chriskempson/base16-vim'
-" tag browser
-Plugin 'taglist.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -126,50 +85,47 @@ filetype plugin indent on    " required
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Plugin Mods                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" airline
-let g:airline_theme='molokai'       " Set theme to JellyBeans
+" Airline Configuration
+let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
+let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
+let g:airline#extensions#branch#enabled = 1 " Enable branches
+let g:airline_theme='base16'
 set laststatus=2                    " Always show status bar
+
 
 " YCM
 let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 "let g:loaded_youcompleteme = 1
 
-" javacomplete
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" jedi-vim open definitions in new tabs
-let g:jedi#use_tabs_not_buffers = 1
-
-" json-vim
-set conceallevel=0
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" python3
-"let g:syntastic_python_python_exe = 'python3'
-
-" vim-markdown
-let g:vim_markdown_conceal = 0 "stop concealing
-
 " base16
 let base16colorspace=256  " Access colors present in 256 colorspace
 
-" Airline Configuration
-" " .....................................
-let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
-let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
-let g:airline#extensions#branch#enabled = 1 " Enable branches
-let g:airline_theme='base16'
+" ctrlp config
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_switch_buffer = 'Et'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Keymapping                                                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+let mapleader="\<space>"           " much more egnomic leader
+" " easier write
+nmap <leader>w :w!<cr>
+" easier quit
+nmap <leader>q :q<cr>}"
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
 " Tab Managment Settings
 nnoremap th  :tabfirst<CR>
 nnoremap tk  :tabnext<CR>
@@ -179,23 +135,6 @@ nnoremap tt  :tabedit<Space>
 nnoremap tn  :tabnew<Space>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
-
-"map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
-
-" For local replace
-nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
-
-" For global replace
-nnoremap gR gD:%s/<C-R>///gc<left><left><left>"}]
-
-" With a map leader it's possible to do extra key combinations
-" " like <leader>w saves the current file
-"let mapleader = " " "Leader is the space key
-"let g:mapleader = " "
-" " easier write
-"nmap <leader>w :w!<cr>
-" easier quit
-"nmap <leader>q :q<cr>}"
 
 " force myself to use hjkl
 nnoremap <up>    <nop>
@@ -210,8 +149,6 @@ inoremap <right> <nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. ColorScheme                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"colorscheme eink
-"colorscheme Chasing_Logic
 colorscheme base16-default-dark
 set background=dark
 
