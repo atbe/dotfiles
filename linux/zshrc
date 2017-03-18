@@ -105,11 +105,11 @@ source $ZSH/oh-my-zsh.sh
 #################################################
 # Alias'
 #################################################
+<<<<<<< Updated upstream
 # git alias'
 alias gs="git status"
 alias gd="git diff"
 alias gaa="git add -A"
-
 alias ti="ls -latrTh"
 
 alias arctic="ssh ahmedibr@arctic.cse.msu.edu"
