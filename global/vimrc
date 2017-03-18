@@ -78,6 +78,9 @@ Plugin 'fatih/vim-go'
 "
 " base16
 Plugin 'chriskempson/base16-vim'
+"
+" doxygen doc generation support
+Plugin 'DoxygenToolkit.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
