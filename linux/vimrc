@@ -8,7 +8,7 @@
 "   01. General ................. General Vim behavior                       "
 "   02. Vundle/Pathogen .................. Setup Vundle&Pathogen             "
 "   03. Plugin Mods ............. Modifications made to plugins              "
-"   04. Keymapping ............. All the different key mappings              " 
+"   04. Keymapping ............. All the different key mappings              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -20,7 +20,7 @@ set number	        	        " Set line numbers on by default.
 syntax on		                  " Set Syntax on by default.
 set t_Co=256                  " Make the colors purty.
 set ls=2		                  " Show full file path always
-set tabstop=2 tabstop=2 shiftwidth=2 expandtab
+set tabstop=2 shiftwidth=2 expandtab
 set mouse=a                       " Turn that mouse on
 set shell=/bin/bash               " Needed to keep Vundle behaved
 set autochdir                     " Always set PWD to file directory
@@ -30,6 +30,22 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_working_path_mode = 'ra'
 set conceallevel=0
 let g:ctrlp_switch_buffer = 'Et'
+
+set showmatch
+set matchtime=3
+let mapleader = ","
+
+" cse 320 stuff
+set term=xterm-color
+set textwidth=80
+set wrap
+set showcmd
+set ruler
+set cindent
+set softtabstop=2
+autocmd FileType  make      setlocal noexpandtab
+autocmd FileType  makefile  setlocal noexpandtab
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Vundle and Pathogen                                                    "
@@ -47,62 +63,39 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 " Vundle Packages: "
-" Fugitive
-Plugin 'tpope/vim-fugitive'
-" NERDTree
-Plugin 'scrooloose/nerdTree'
 " vim-airline
 Plugin 'bling/vim-airline'
 " vim-airline-themes
 Plugin 'vim-airline/vim-airline-themes'
-" YCM
-"Plugin 'valloric/youcompleteme' 
+" YCm
+"Plugin 'valloric/youcompleteme'
 " indentline
 Plugin 'yggdroot/indentline'
 " The NERD Commenter
 Plugin 'scrooloose/nerdcommenter'
-" Vim colorschemes
-Plugin 'flazz/vim-colorschemes'
-" JSON.vim
-Plugin 'elzr/vim-json'
 " obsession
 Plugin 'tpope/vim-obsession'
 " EasyMotion
-Plugin 'easymotion/vim-easymotion'
-" Auto-pairs
-Plugin 'jiangmiao/auto-pairs'
 " vim-slim
 Plugin 'slim-template/vim-slim'
-" Kotlin higlighting
-Plugin 'udalov/kotlin-vim'
-" javacomplete2
-Plugin 'artur-shaik/vim-javacomplete2'
-" jedi-vim
-Plugin 'davidhalter/jedi-vim'
-" vim-gradle
-Plugin 'tfnico/vim-gradle'
-" inc search
-Plugin 'haya14busa/incsearch.vim'
-" vim-perl
-Plugin 'vim-perl/vim-perl'
-" NERDTree Tabs
-Bundle 'jistr/vim-nerdtree-tabs'
-" indent guidlines
-Plugin 'nathanaelkane/vim-indent-guides'
 " rename
 Plugin 'danro/rename.vim'
 " trailing whitespace
 Plugin 'bronson/vim-trailing-whitespace'
 " ctrlp ... omg/thisislife
 Plugin 'kien/ctrlp.vim'
-" vimagit
-Plugin 'jreybert/vimagit'
 " tabular
 Plugin 'godlygeek/tabular'
 " vim markdown
 Plugin 'plasticboy/vim-markdown'
-" matchtag
-Plugin 'gregsexton/matchtag'
+" gitgutter
+Plugin 'airblade/vim-gitgutter'
+" syntasticccc
+"Plugin 'scrooloose/syntastic'
+" base-16
+Plugin 'chriskempson/base16-vim'
+" doxygen doc generation support
+Plugin 'DoxygenToolkit.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -119,6 +112,15 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " jedi-vim open definitions in new tabs
 let g:jedi#use_tabs_not_buffers = 1
 
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Keymapping                                                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -134,5 +136,11 @@ nnoremap td  :tabclose<CR>
 
 map <F8> : !gcc % && ./a.out <CR>   " f8 compile and run c program
 
-colorscheme Chasing_Logic
-set background=dark
+" use base16 background helper if possible
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+colorscheme base16-google-light
+"set background=dark
