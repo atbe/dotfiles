@@ -105,7 +105,6 @@ source $ZSH/oh-my-zsh.sh
 #################################################
 # Alias'
 #################################################
-<<<<<<< Updated upstream
 # git alias'
 alias gs="git status"
 alias gd="git diff"
