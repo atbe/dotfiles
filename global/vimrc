@@ -33,58 +33,54 @@ set undolevels=100                             " what can I say, I like to undo
 set showcmd                                    " Shows command at the bottom right
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 02. Vundle and Pathogen                                                    "
+" 02. vim-plug                                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.vim/plugged')
 
-" https://github.com/VundleVim/Vundle.vim
-Plugin 'VundleVim/Vundle.vim'
-" Vundle Packages:
-"
 " vim-airline https://github.com/vim-airline/vim-airline
-Plugin 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 "
 " vim-airline-themes https://github.com/vim-airline/vim-airline-themes
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline-themes'
 "
-" YCm
-Plugin 'valloric/youcompleteme'
+" https://github.com/Shougo/deoplete.nvim
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "
 " indentline https://github.com/Yggdroot/indentLine
-Plugin 'yggdroot/indentline'
+Plug 'yggdroot/indentline'
 "
 " The NERD Commenter https://github.com/scrooloose/nerdcommenter
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 "
 " rename
-Plugin 'danro/rename.vim'
+Plug 'danro/rename.vim'
 "
 " trailing whitespace
-Plugin 'bronson/vim-trailing-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 "
 " ctrlp /thisislife
-Plugin 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 "
 " tabular
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 "
 " gitgutter
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 "
 " vim gogogo
-Plugin 'fatih/vim-go'
+Plug 'fatih/vim-go'
 "
 " base16
-Plugin 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'
 "
 " doxygen doc generation support
-Plugin 'DoxygenToolkit.vim'
+Plug 'DoxygenToolkit.vim'
 
-call vundle#end()            " required
+" Initialize plugin system
+call plug#end()
+
 filetype plugin indent on    " required
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Plugin Mods                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -94,7 +90,6 @@ let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 let g:airline#extensions#branch#enabled = 1 " Enable branches
 let g:airline_theme='base16'
 set laststatus=2                    " Always show status bar
-
 
 " YCM
 let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
@@ -118,6 +113,7 @@ nmap <leader>w :w!<cr>
 " easier quit
 nmap <leader>q :q<cr>}"
 
+' tabularize
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
@@ -154,6 +150,12 @@ inoremap <right> <nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme base16-default-dark
 set background=dark
+
+" shell background?
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 " customize the colorscheme
 highlight Comment ctermfg=white " comments are unreadable otherwise
