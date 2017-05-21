@@ -54,6 +54,7 @@ source ~/bin/antigen/antigen.zsh
 antigen use oh-my-zsh
 antigen theme $ZSH_THEME
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle git
 
 antigen apply
@@ -64,8 +65,7 @@ antigen apply
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git, zsh-autosuggestions, history-substring-search, autojump)
 
-source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.oh-my-zsh/custom/plugins/autojump.plugin.zsh
+source ~/.oh-my-zsh/custom/plugins/autojump/bin/autojump.plugin.zsh
 
 # User configuration
 
@@ -110,11 +110,6 @@ alias gs="git status"
 alias gd="git diff"
 alias gaa="git add -A"
 alias ti="ls -latrTh"
-
-alias arctic="ssh ahmedibr@arctic.cse.msu.edu"
-alias black="ssh ahmedibr@black.cse.msu.edu"
-alias cse410="ssh ahmedibr@cse410.cse.msu.edu"
-alias hpcc_g="ssh ahmedibr@gateway.hpcc.msu.edu"
 
 #################################################
 # Exports

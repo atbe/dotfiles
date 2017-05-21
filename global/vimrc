@@ -76,6 +76,9 @@ Plug 'chriskempson/base16-vim'
 "
 " doxygen doc generation support
 Plug 'DoxygenToolkit.vim'
+"
+" neomake
+Plug 'neomake/neomake'
 
 " Initialize plugin system
 call plug#end()
@@ -144,6 +147,9 @@ inoremap <up>    <nop>
 inoremap <down>  <nop>
 inoremap <left>  <nop>
 inoremap <right> <nop>
+
+" clear all trailing whitespace on save
+autocmd BufEnter * EnableStripWhitespaceOnSave
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. ColorScheme                                                            "

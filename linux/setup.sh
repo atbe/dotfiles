@@ -38,7 +38,7 @@ git clone https://github.com/wting/autojump.git $(echo $HOME)/.oh-my-zsh/custom/
 # neovim
 printf "\n*****\nSetting up neovim\n*****\n"
 sudo apt-get install -y software-properties-common python-software-properties
-sudo add-apt-repository ppa:neovim-ppa/stable
+sudo add-apt-repository -y ppa:neovim-ppa/stable
 sudo apt-get update > /dev/null
 sudo apt-get install -y neovim > /dev/null
 sudo apt-get install -y python-dev python-pip python3-dev python3-pip > /dev/null
