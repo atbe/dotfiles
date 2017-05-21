@@ -31,7 +31,6 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim # link neovim
 printf "\n*****\nSetting up zsh\n*****\n"
 mkdir -p ~/bin/antigen
 curl -L git.io/antigen > ~/bin/antigen/antigen.zsh
-zsh # evething here and below will be run in zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $(echo $HOME)/.oh-my-zsh/custom/plugins/
 git clone https://github.com/wting/autojump.git $(echo $HOME)/.oh-my-zsh/custom/plugins/
@@ -41,17 +40,17 @@ printf "\n*****\nSetting up neovim\n*****\n"
 sudo apt-get install -y software-properties-common python-software-properties
 sudo add-apt-repository ppa:neovim-ppa/stable
 sudo apt-get update > /dev/null
-sudo apt-get install -y neovim
-sudo apt-get install -y python-dev python-pip python3-dev python3-pip
+sudo apt-get install -y neovim > /dev/null
+sudo apt-get install -y python-dev python-pip python3-dev python3-pip > /dev/null
 
 # update all the default editors to use neovim
 printf "\n*****\nChoosing defaults\n*****\n"
-sudo update-alternatives --install -y /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --config -y vi
-sudo update-alternatives --install -y /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --config -y vim
-sudo update-alternatives --install -y /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --config -y editor
+sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+sudo update-alternatives --config vi
+sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+sudo update-alternatives --config vim
+sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+sudo update-alternatives --config editor
 
 # plug for neovim
 printf "\n*****\nInstalling plug for neovim\n*****\n"
