@@ -151,3 +151,13 @@ export PATH=$PATH:$GOPATH
 # fuck
 eval $(thefuck --alias)
 eval $(/usr/libexec/path_helper -s)
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+# added by travis gem
+[ -f /Users/abe/.travis/travis.sh ] && source /Users/abe/.travis/travis.sh
+export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
+
+# hugo
+export PATH=$PATH:/Users/abe/prams/hugo

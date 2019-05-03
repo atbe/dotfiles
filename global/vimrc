@@ -148,9 +148,6 @@ inoremap <down>  <nop>
 inoremap <left>  <nop>
 inoremap <right> <nop>
 
-" clear all trailing whitespace on save
-autocmd BufEnter * EnableStripWhitespaceOnSave
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. ColorScheme                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
