@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/abe/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -64,9 +64,7 @@ antigen apply
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git, zsh-autosuggestions, history-substring-search)
-
-source ~/.oh-my-zsh/custom/plugins/autojump.plugin.zsh
+plugins=(git, zsh-autosuggestions, history-substring-search, autojump)
 
 # User configuration
 
@@ -76,8 +74,6 @@ source ~/.oh-my-zsh/custom/plugins/autojump.plugin.zsh
 # completion based on pretext
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
-
-source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -119,7 +115,7 @@ alias kill_icdd="kill -9 \$(pidof icdd) \$(pidof printuitool)"
 # Exports
 #################################################
 # g-test path
-export GTEST_DIR="/Users/abe/bin/google-test/googletest-release-1.8.0/googletest/"
+export GTEST_DIR="~/bin/google-test/googletest-release-1.8.0/googletest/"
 
 #################################################
 #
@@ -149,22 +145,23 @@ export PATH=$PATH:$GOPATH
 # source /usr/local/share/antigen/antigen.zsh
 
 # fuck
-eval $(thefuck --alias)
 eval $(/usr/libexec/path_helper -s)
 
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
 # added by travis gem
-[ -f /Users/abe/.travis/travis.sh ] && source /Users/abe/.travis/travis.sh
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 
 # hugo
-export PATH=$PATH:/Users/abe/prams/hugo
+export PATH=$PATH:~/prams/hugo
 export PATH="/usr/local/opt/python36/bin:$PATH"
 
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/abe/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/abe/bin/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '~/bin/google-cloud-sdk/path.zsh.inc' ]; then . '~/bin/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/abe/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/abe/bin/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '~/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '~/bin/google-cloud-sdk/completion.zsh.inc'; fi
