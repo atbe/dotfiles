@@ -1,8 +1,3 @@
-[user]
-    name = @be
-	email = abeahmed2@gmail.com
-[include]
-    ;path=/Users/abe/.bm_git_config/gitconfig
 [merge]
     tool = diffmerge
 [mergetool "diffmerge"]
@@ -30,3 +25,6 @@
 	excludesfile = ~/.gitignore_global
 	autocrlf = false
 	safecrlf = true
+	editor = nvim
+[pager]
+	branch = false
