@@ -74,9 +74,6 @@ Plug 'fatih/vim-go'
 " base16
 Plug 'chriskempson/base16-vim'
 "
-" doxygen doc generation support
-Plug 'DoxygenToolkit.vim'
-"
 " neomake
 Plug 'neomake/neomake'
 
@@ -116,7 +113,7 @@ nmap <leader>w :w!<cr>
 " easier quit
 nmap <leader>q :q<cr>}"
 
-' tabularize
+" tabularize
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)

@@ -28,5 +28,5 @@
 	lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d %Cgreen%cr %Cblue%an%Creset %s' --date=relative --all
 [core]
 	excludesfile = ~/.gitignore_global
-	autocrlf = input
+	autocrlf = false
 	safecrlf = true
