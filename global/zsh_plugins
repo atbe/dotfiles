@@ -1,0 +1,9 @@
+robbyrussell/oh-my-zsh path:lib
+robbyrussell/oh-my-zsh path:themes/bureau.zsh-theme
+
+zsh-users/zsh-completions
+
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+
