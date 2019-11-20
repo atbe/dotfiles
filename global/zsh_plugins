@@ -1,4 +1,7 @@
-robbyrussell/oh-my-zsh path:lib
+robbyrussell/oh-my-zsh
+robbyrussell/oh-my-zsh folder:lib
+robbyrussell/oh-my-zsh folder:plugins/common-aliases
+robbyrussell/oh-my-zsh folder:plugins/git
 robbyrussell/oh-my-zsh path:themes/bureau.zsh-theme
 
 zsh-users/zsh-completions
