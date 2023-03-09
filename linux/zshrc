@@ -15,7 +15,7 @@ export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrus
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins
 
-plugins=(kubectl history-substring-search autojump git brew)
+plugins=(kubectl history-substring-search autojump git)
 source <(kubectl completion zsh)
 
 # completion based on pretext
@@ -64,8 +64,8 @@ export PATH=$PATH:$GOPATH
 export PATH=$PATH:$GOPATH/bin
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
@@ -83,4 +83,7 @@ export PATH="/usr/local/opt/helm@2/bin:$PATH"
 
 alias apim="dotnet /mnt/c/Code/git/azure-api-management-devops-resource-kit/src/APIM_ARMTemplate/apimtemplate/bin/Debug/netcoreapp2.1/apimtemplate.dll"
 
-source <(kubectl completion zsh)
+source <(kubectl completion zsh )
+
+eval "$(scmpuff init -s)"
+
