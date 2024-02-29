@@ -23,8 +23,13 @@
 	lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d %Cgreen%cr %Cblue%an%Creset %s' --date=relative --all
 [core]
 	excludesfile = ~/.gitignore_global
-	autocrlf = false
-	safecrlf = true
-	editor = nvim
+	autocrlf = input
+	safecrlf = false
+	editor = nano
 [pager]
 	branch = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
