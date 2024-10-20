@@ -11,7 +11,7 @@ export PATH="/usr/local/bin:$PATH"
 # Autoload features ftw
 autoload predict-on
 
-source /usr/local/opt/antidote/share/antidote/antidote.zsh
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins
 
 plugins=(kubectl history-substring-search autojump git brew)
@@ -51,10 +51,13 @@ unsetopt AUTO_PUSHD
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# base16 color
-git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell &> /dev/null
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        source "$BASE16_SHELL/profile_helper.sh"
+        
+base16_google-light
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -297,8 +300,6 @@ _nhost()
 if [ "$funcstack[1]" = "_nhost" ]; then
     _nhost
 fi
-
-source ${HOME}/.rvm/scripts/rvm
 
 export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 
