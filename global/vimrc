@@ -17,8 +17,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                               " be iMproved, required
 filetype off                                   " required
-set number                                     " Set line numbers on by default.
 syntax on                                      " Set Syntax on by default.
+set number                                     " Set line numbers on by default.
 set t_Co=256                                   " Make the colors purty.
 set ls=2                                       " Show full file path always
 set tabstop=4 tabstop=4 shiftwidth=4 expandtab " tabs as spaces, all size 4
@@ -33,54 +33,24 @@ set undolevels=100                             " what can I say, I like to undo
 set showcmd                                    " Shows command at the bottom right
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 02. vim-plug                                                               "
+" 02. Plugins                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
-call plug#begin('~/.vim/plugged')
 
-" vim-airline https://github.com/vim-airline/vim-airline
-Plug 'vim-airline/vim-airline'
-"
-" vim-airline-themes https://github.com/vim-airline/vim-airline-themes
-Plug 'vim-airline/vim-airline-themes'
-"
-" https://github.com/Shougo/deoplete.nvim
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"
-" indentline https://github.com/Yggdroot/indentLine
-Plug 'yggdroot/indentline'
-"
-" The NERD Commenter https://github.com/scrooloose/nerdcommenter
-Plug 'scrooloose/nerdcommenter'
-"
-" rename
-Plug 'danro/rename.vim'
-"
-" trailing whitespace
-Plug 'ntpeters/vim-better-whitespace'
-"
-" ctrlp /thisislife
-Plug 'ctrlpvim/ctrlp.vim'
-"
-" tabular
-Plug 'godlygeek/tabular'
-"
-" gitgutter
-Plug 'airblade/vim-gitgutter'
-"
-" vim gogogo
-Plug 'fatih/vim-go'
-"
-" base16
-Plug 'chriskempson/base16-vim'
-"
-" neomake
-Plug 'neomake/neomake'
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" Initialize plugin system
-call plug#end()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'chriskempson/base16-vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 filetype plugin indent on    " required
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Plugin Mods                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -88,15 +58,13 @@ filetype plugin indent on    " required
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 let g:airline#extensions#branch#enabled = 1 " Enable branches
-let g:airline_theme='base16'
 set laststatus=2                    " Always show status bar
 
-" YCM
-let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-"let g:loaded_youcompleteme = 1
-
-" base16
-let base16colorspace=256  " Access colors present in 256 colorspace
+if exists('$BASE16_THEME')
+       \ && (!exists('g:colors_name') || g:colors_name != 'base16-$BASE16_THEME')
+     let base16colorspace=256
+     colorscheme base16-$BASE16_THEME
+endif
 
 " ctrlp config
 let g:ctrlp_working_path_mode = 'ra'
@@ -152,8 +120,9 @@ nnoremap <C-k> :tabnext<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. ColorScheme                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark
+" set background=dark
 
 " customize the colorscheme
 highlight Comment ctermfg=white " comments are unreadable otherwise
 hi MatchParen cterm=none ctermbg=white ctermfg=red " braces are almost hidden otherwise
+
