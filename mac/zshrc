@@ -28,7 +28,7 @@ alias v='nvim'
 #################################################
 # Alias'
 #################################################
-#
+
 alias gs="git status"
 alias gd="git diff"
 alias gpl="git pull origin"
@@ -62,8 +62,6 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         source "$BASE16_SHELL/profile_helper.sh"
         
-base16_google-light
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # go
@@ -323,3 +321,6 @@ if [ -f '/Users/ibrahimahmed/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/User
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/ibrahimahmed/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ibrahimahmed/bin/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/ibrahimahmed/.cache/lm-studio/bin"
