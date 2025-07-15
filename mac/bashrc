@@ -56,3 +56,6 @@ export GOPATH=$HOME/go
 # added by travis gem
 [ -f /Users/abe/.travis/travis.sh ] && source /Users/abe/.travis/travis.sh
 . "$HOME/.cargo/env"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/ibrahimahmed/.cache/lm-studio/bin"

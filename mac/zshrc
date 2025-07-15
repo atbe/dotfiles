@@ -4,6 +4,8 @@
 # time that oh-my-zsh is loaded.
 ZSH_THEME="bureau"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -14,7 +16,7 @@ autoload predict-on
 source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins
 
-plugins=(kubectl history-substring-search autojump git brew)
+plugins=(kubectl history-substring-search autojump git brew docker)
 # source <(kubectl completion zsh)
 
 # completion based on pretext
@@ -138,3 +140,10 @@ export PATH="$PATH:/Users/ibrahimahmed/.cache/lm-studio/bin"
 
 # Auto-Warpify
 printf 'P$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh", "uname": "Darwin" }}�' 
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/ibrahimahmed/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
