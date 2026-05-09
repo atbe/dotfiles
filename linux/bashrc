@@ -33,3 +33,5 @@ export EDITOR='vim'                  				  # Make default editor VIM
 
 if_os darwin && alias vim="/usr/local/bin/mvim -v"    # Alias for macvim (Mac only)
 alias change="sudo update-alternatives --config"
+
+. "$HOME/.local/bin/env"
