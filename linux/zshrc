@@ -6,6 +6,7 @@ ZSH_THEME="bureau"
 
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Autoload features ftw
 autoload predict-on
@@ -41,6 +42,11 @@ alias ti="ls -latrTh"
 
 alias k="kubectl"
 
+alias codex-openai='codex -c model_provider="openai"'
+alias codex-litellm='codex -c model_provider="litellm"'
+
+alias claude-litellm='ANTHROPIC_BASE_URL=https://lllm.inference.net ANTHROPIC_API_KEY=$LITELLM_API_KEY claude'
+
 #################################################
 #
 #################################################
@@ -72,6 +78,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# asdf version manager
+export PATH="$PATH:$HOME/.asdf/bin:$HOME/.asdf/shims"
+
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
@@ -91,4 +100,16 @@ alias apim="dotnet /mnt/c/Code/git/azure-api-management-devops-resource-kit/src/
 source <(kubectl completion zsh )
 
 eval "$(scmpuff init -s)"
+
+
+# bun completions
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+. "$HOME/.local/bin/env"
+# CF CLI completions
+[[ -f "~/.config/cf/completions/_cf.zsh" ]] && source "~/.config/cf/completions/_cf.zsh"
 
