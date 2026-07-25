@@ -101,7 +101,6 @@ source <(kubectl completion zsh )
 
 eval "$(scmpuff init -s)"
 
-
 # bun completions
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
@@ -113,3 +112,10 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # CF CLI completions
 [[ -f "~/.config/cf/completions/_cf.zsh" ]] && source "~/.config/cf/completions/_cf.zsh"
 
+export PATH="$HOME/.kimi-code/bin:$PATH"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
