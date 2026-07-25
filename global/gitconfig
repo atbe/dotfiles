@@ -10,6 +10,7 @@
 [delta]
     line-numbers = true
     navigate = true
+	light = true
 
 [merge]
     conflictstyle = zdiff3
