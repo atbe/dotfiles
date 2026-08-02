@@ -6,6 +6,9 @@ ZSH_THEME="bureau"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# Created by `pipx` on 2022-01-12 02:28:36
+export PATH="$PATH:$HOME/.local/bin"
+
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -73,7 +76,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # go
 export PATH=$PATH:/opt/homebrew/go/bin
-echo $HOME
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH
 export PATH=$PATH:$GOPATH/bin
@@ -104,7 +106,6 @@ eval "$(scmpuff init -s)"
 
 # Created by `pipx` on 2022-01-12 02:28:36
 export PATH="$PATH:$HOME/.local/bin"
-
 export PATH="$HOME/.poetry/bin:$PATH"
 
 export PATH="$PATH:$HOME/.dotnet"
@@ -143,7 +144,9 @@ if [ -f "$HOME/bin/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/bin/goo
 
 # Added by LM Studio CLI (lms)
 # Auto-Warpify
-printf 'P$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh", "uname": "Darwin" }}�' 
+if [[ "$TERM_PROGRAM" == "WarpTerminal" || -n "$WARP_SESSION_ID" ]]; then
+  printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh", "uname": "Darwin" }}\x9c'
+fi
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=("$HOME/.docker/completions" $fpath)
@@ -162,3 +165,16 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# Java 17 for Maestro CLI.
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+case ":$PATH:" in
+  *":/opt/homebrew/opt/openjdk@17/bin:"*) ;;
+  *) export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH" ;;
+esac
+case ":$PATH:" in
+  *":$HOME/.maestro/bin:"*) ;;
+  *) export PATH="$PATH:$HOME/.maestro/bin" ;;
+esac
+# CF CLI completions
+[[ -f "$HOME/.config/cf/completions/_cf.zsh" ]] && source "$HOME/.config/cf/completions/_cf.zsh"
