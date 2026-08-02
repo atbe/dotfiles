@@ -14,7 +14,7 @@ autoload predict-on
 export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
 
 source <(antibody init)
-antibody bundle < ~/.zsh_plugins
+antibody bundle < "$HOME/.zsh_plugins"
 
 plugins=(kubectl history-substring-search autojump git)
 source <(kubectl completion zsh)
@@ -100,7 +100,6 @@ alias apim="dotnet /mnt/c/Code/git/azure-api-management-devops-resource-kit/src/
 source <(kubectl completion zsh )
 
 eval "$(scmpuff init -s)"
-
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
