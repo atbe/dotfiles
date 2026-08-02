@@ -69,7 +69,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # go
 export PATH=$PATH:/usr/local/go/bin
-echo $HOME
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH"
 export PATH="$PATH:$GOPATH/bin"
@@ -113,8 +112,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.kimi-code/bin:$PATH"
 
+source "$HOME/.env"
+
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"
 fpath=("$HOME/.grok/completions/zsh" $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# >>> railway initialize >>>
+source "$HOME/.railway/env"
+# <<< railway initialize <<<

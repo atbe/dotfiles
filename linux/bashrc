@@ -35,3 +35,9 @@ if_os darwin && alias vim="/usr/local/bin/mvim -v"    # Alias for macvim (Mac on
 alias change="sudo update-alternatives --config"
 
 . "$HOME/.local/bin/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source ~/.env
