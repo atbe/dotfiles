@@ -43,7 +43,7 @@ alias fu="read -rsp $'positive(+)?\n' -n1 key && echo "Careful" && rm -rf" #dele
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # Source profile dot file
-source ~/.profile
+source "$HOME/.profile"
 
 # jdk switching
 alias setJdk6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
@@ -54,8 +54,8 @@ alias setJdk8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 export GOPATH=$HOME/go
 
 # added by travis gem
-[ -f /Users/abe/.travis/travis.sh ] && source /Users/abe/.travis/travis.sh
+[ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
 . "$HOME/.cargo/env"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/ibrahimahmed/.cache/lm-studio/bin"
+export PATH="$PATH:$HOME/.cache/lm-studio/bin"
