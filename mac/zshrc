@@ -157,6 +157,7 @@ export PATH="$PATH:$HOME/.cache/lm-studio/bin"
 
 # Added by Windsurf
 export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
@@ -179,11 +180,14 @@ esac
 # CF CLI completions
 [[ -f "$HOME/.config/cf/completions/_cf.zsh" ]] && source "$HOME/.config/cf/completions/_cf.zsh"
 
-# asdf version manager
-. "/opt/homebrew/opt/asdf/libexec/asdf.sh"
+# asdf version manager (0.16+ Go rewrite: no asdf.sh, add shims to PATH)
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# Load untracked local secrets (file is gitignored / outside the repo)
+[ -f "$HOME/.secrets.zsh" ] && source "$HOME/.secrets.zsh"
