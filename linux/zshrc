@@ -123,3 +123,7 @@ autoload -Uz compinit && compinit -C
 # >>> railway initialize >>>
 source "$HOME/.railway/env"
 # <<< railway initialize <<<
+
+# Headless boxes: dummy DISPLAY so CLIs (Claude Code etc.) attempt xclip,
+# which is shimmed in ~/.local/bin to proxy the Mac clipboard over Tailscale.
+export DISPLAY=${DISPLAY:-:0}
