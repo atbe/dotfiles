@@ -13,6 +13,10 @@ autoload predict-on
 
 if (( $+commands[antibody] )); then
     export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+    # oh-my-zsh plugins loaded via antibody (e.g. docker) cache completions here;
+    # without it they tee to /completions/_docker and error on every shell start
+    export ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-$HOME/.cache/oh-my-zsh}"
+    mkdir -p "$ZSH_CACHE_DIR/completions"
     source <(antibody init)
     [[ -r "$HOME/.zsh_plugins" ]] && antibody bundle < "$HOME/.zsh_plugins"
 fi

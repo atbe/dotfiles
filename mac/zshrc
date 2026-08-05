@@ -16,8 +16,14 @@ export PATH="/usr/local/bin:$PATH"
 # Autoload features ftw
 autoload predict-on
 
-source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
-antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins
+# oh-my-zsh plugins loaded via antidote (e.g. docker) cache completions here;
+# without it they tee to /completions/_docker and error on every shell start
+export ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-$HOME/.cache/oh-my-zsh}"
+mkdir -p "$ZSH_CACHE_DIR/completions"
+[ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ] && {
+    source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+    antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins
+}
 
 plugins=(kubectl history-substring-search autojump git brew docker)
 # source <(kubectl completion zsh)
