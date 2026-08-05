@@ -47,11 +47,14 @@
 [pager]
     dsf = diff-so-fancy | less --tabs=4 -RFXS
 
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [credential "https://github.com"]
 	helper =
 	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper =
 	helper = !gh auth git-credential
+
+# Per-machine settings that must not be shared fleet-wide (e.g. the
+# https->ssh github rewrite, which requires a GitHub-registered ssh key).
+[include]
+	path = ~/.gitconfig.local
