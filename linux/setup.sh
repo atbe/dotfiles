@@ -1,62 +1,152 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Bootstrap the Linux configuration from this checkout.
+#
+# This script is safe to re-run: package installation, symlinks, and plugin
+# checkouts are all idempotent. It intentionally configures only the current
+# user; it does not change system-wide editor alternatives.
 
-###############################################################################
-# \author Ibrahim Ahmed                                                       #
-# \github atbe                                                                #
-# \copyright MIT                                                              #
-###############################################################################
+set -Eeuo pipefail
 
-# ignore errors and just do what is told
-set +e
+dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+antibody_version="${ANTIBODY_VERSION:-6.1.1}"
+antibody_url="https://github.com/getantibody/antibody/releases/download/v${antibody_version}/antibody_Linux_x86_64.tar.gz"
+scmpuff_version="0.7.0"
 
-# update
-printf "\n*****\nrunning a quick apt update\n*****\n"
-sudo apt update > /dev/null
-sudo apt -y upgrade > /dev/null
+case "$(uname -m)" in
+    x86_64) scmpuff_arch="amd64"; scmpuff_sha256="174c24e7aa672dbd6da97eb518f83482eefddceb7a483a40d297a11cb0cdb362" ;;
+    aarch64|arm64) scmpuff_arch="arm64"; scmpuff_sha256="0b7dc2252eccefaec70aef9fe44a13261bab69e2bbd162399bd95ca8983ff502" ;;
+    armv7l) scmpuff_arch="armv7"; scmpuff_sha256="7bec4ef29fc9f5c79a2200ab4f899ad336c5eb91c9eb8eaebb0209f7b43258f6" ;;
+    *)
+        printf 'Unsupported architecture for scmpuff: %s\n' "$(uname -m)" >&2
+        exit 1
+        ;;
+esac
+scmpuff_url="https://github.com/mroth/scmpuff/releases/download/v${scmpuff_version}/scmpuff_${scmpuff_version}_linux_${scmpuff_arch}.tar.gz"
 
-# install neccessary packages
-printf "\n*****\napt installing a bunch of stuffs\n*****\n"
-sudo apt install -y git zsh tmux irssi autojump tree curl > /dev/null
+require_command() {
+    command -v "$1" >/dev/null 2>&1 || {
+        printf 'Required command is unavailable after setup: %s\n' "$1" >&2
+        exit 1
+    }
+}
 
-# clone dotfiles
-printf "\n*****\nCloning dotfiles\n*****\n"
-cd "$HOME"
-git clone https://github.com/atbe/dotfiles.git
-cd dotfiles
-./makesymlinks.sh
-mkdir -p "$HOME/.config/nvim/"
-ln -s "$HOME/.vimrc" "$HOME/.config/nvim/init.vim" # link neovim
+clone_if_missing() {
+    local repository=$1 destination=$2
 
-# get oh-my-zsh and other zsh plugins installed
-printf "\n*****\nSetting up zsh\n*****\n"
-mkdir -p "$HOME/bin/antigen"
-curl -L git.io/antigen > "$HOME/bin/antigen/antigen.zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/"
-git clone https://github.com/wting/autojump.git "$HOME/.oh-my-zsh/custom/plugins/"
+    if [[ -d "$destination/.git" ]]; then
+        return
+    elif [[ -e "$destination" ]]; then
+        printf 'Cannot install %s: %s exists but is not a Git checkout.\n' "$repository" "$destination" >&2
+        return 1
+    else
+        git clone --depth 1 "$repository" "$destination"
+    fi
+}
 
-# neovim
-printf "\n*****\nSetting up neovim\n*****\n"
-sudo apt-get install -y software-properties-common python-software-properties
-sudo add-apt-repository -y ppa:neovim-ppa/stable
-sudo apt-get update > /dev/null
-sudo apt-get install -y neovim > /dev/null
-sudo apt-get install -y python-dev python-pip python3-dev python3-pip > /dev/null
+install_antibody() {
+    local temporary_dir archive binary
 
-# update all the default editors to use neovim
-printf "\n*****\nChoosing defaults\n*****\n"
-sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --config vi
-sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --config vim
-sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --config editor
+    if command -v antibody >/dev/null 2>&1; then
+        return
+    fi
 
-# plug for neovim
-printf "\n*****\nInstalling plug for neovim\n*****\n"
-curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    temporary_dir="$(mktemp -d)"
+    archive="$temporary_dir/antibody.tar.gz"
+    trap 'rm -rf "$temporary_dir"' RETURN
+    curl --fail --location --silent --show-error "$antibody_url" --output "$archive"
+    tar -xzf "$archive" -C "$temporary_dir"
+    binary="$(find "$temporary_dir" -type f -name antibody -perm -u+x -print -quit)"
+    [[ -n "$binary" ]] || {
+        printf 'The Antibody archive did not contain an executable.\n' >&2
+        return 1
+    }
 
-# base16 shell
-printf "\n*****\nShell base16 installing\n*****\n"
-git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
+    mkdir -p "$HOME/.local/bin"
+    install -m 0755 "$binary" "$HOME/.local/bin/antibody"
+    trap - RETURN
+    rm -rf "$temporary_dir"
+}
+
+install_scmpuff() {
+    local temporary_dir archive binary
+
+    if command -v scmpuff >/dev/null 2>&1; then
+        return
+    fi
+
+    temporary_dir="$(mktemp -d)"
+    archive="$temporary_dir/scmpuff.tar.gz"
+    trap 'rm -rf "$temporary_dir"' RETURN
+    curl --fail --location --silent --show-error "$scmpuff_url" --output "$archive"
+    printf '%s  %s\n' "$scmpuff_sha256" "$archive" | sha256sum --check --status
+    tar -xzf "$archive" -C "$temporary_dir"
+    binary="$(find "$temporary_dir" -type f -name scmpuff -perm -u+x -print -quit)"
+    [[ -n "$binary" ]] || {
+        printf 'The scmpuff archive did not contain an executable.\n' >&2
+        return 1
+    }
+
+    mkdir -p "$HOME/.local/bin"
+    install -m 0755 "$binary" "$HOME/.local/bin/scmpuff"
+    trap - RETURN
+    rm -rf "$temporary_dir"
+}
+
+printf '\n==> Installing Linux packages\n'
+sudo apt-get update
+sudo apt-get install --yes \
+    autojump \
+    curl \
+    fish \
+    fzf \
+    gh \
+    git \
+    git-delta \
+    git-lfs \
+    irssi \
+    nano \
+    neovim \
+    pandoc \
+    tmux \
+    tree \
+    xclip \
+    zsh
+
+printf '\n==> Linking dotfiles\n'
+"$dotfiles_dir/makesymlinks.sh"
+
+printf '\n==> Installing Antibody and zsh plugins\n'
+export PATH="$HOME/.local/bin:$PATH"
+install_antibody
+require_command antibody
+antibody bundle < "$HOME/.zsh_plugins"
+
+printf '\n==> Installing scmpuff\n'
+install_scmpuff
+require_command scmpuff
+
+printf '\n==> Installing base16 shell\n'
+clone_if_missing https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
+
+printf '\n==> Installing tmux plugins\n'
+clone_if_missing https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
+# TPM's command-line installer reads the path from tmux's global environment.
+# `run .../tpm` sets this during normal tmux startup; establish it here because
+# the bootstrap intentionally runs before the first tmux session.
+tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
+"$HOME/.tmux/plugins/tpm/bin/install_plugins"
+
+printf '\n==> Installing Vim/Neovim plugins\n'
+clone_if_missing https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
+nvim --headless '+PluginInstall' '+qall'
+
+printf '\n==> Installing fish and fish plugins\n'
+mkdir -p "$HOME/.config/fish/functions"
+if [[ ! -f "$HOME/.config/fish/functions/fundle.fish" ]]; then
+    curl --fail --location --silent --show-error \
+        https://raw.githubusercontent.com/tuvistavie/fundle/master/functions/fundle.fish \
+        --output "$HOME/.config/fish/functions/fundle.fish"
+fi
+fish -c 'fundle install'
+
+printf '\n==> Setup complete. Start a new shell to load the configuration.\n'
