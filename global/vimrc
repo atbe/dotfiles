@@ -120,7 +120,18 @@ nnoremap <C-k> :tabnext<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. ColorScheme                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set background=dark
+" Sync background with macOS light/dark mode
+function! SyncThemeWithMacOS()
+  silent call system('defaults read -g AppleInterfaceStyle')
+  if v:shell_error == 0
+    set background=dark
+  else
+    set background=light
+  endif
+endfunction
+
+call SyncThemeWithMacOS()
+autocmd FocusGained * call SyncThemeWithMacOS()
 
 " customize the colorscheme
 highlight Comment ctermfg=white " comments are unreadable otherwise

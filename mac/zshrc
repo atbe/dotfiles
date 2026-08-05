@@ -53,6 +53,9 @@ alias k="kubectl"
 
 alias vi="nvim"
 
+alias codex-openai='codex -c model_provider="openai"'
+alias codex-litellm='codex -c model_provider="litellm"'
+
 #################################################
 #
 #################################################
@@ -79,6 +82,8 @@ export PATH=$PATH:/opt/homebrew/go/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH
 export PATH=$PATH:$GOPATH/bin
+
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
@@ -188,6 +193,18 @@ export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# Added by Antigravity
+export PATH="/Users/ibrahimahmed/.antigravity/antigravity/bin:$PATH"
+
+# direnv — auto-load .envrc when entering project directories
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="/Users/ibrahimahmed/.lsptkns/bin:$PATH"
+
+# Added by Raindrop installer
+export PATH="$HOME/.raindrop/bin:$PATH"
+# End Raindrop installer
 
 # Load untracked local secrets (file is gitignored / outside the repo)
 [ -f "$HOME/.secrets.zsh" ] && source "$HOME/.secrets.zsh"
