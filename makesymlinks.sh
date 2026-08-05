@@ -1,52 +1,47 @@
-#!/bin/bash
-############################
-# .make.sh
-# This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
-############################
+#!/usr/bin/env bash
+# Link this checkout's configuration files into the current user's home
+# directory. Existing files are moved to a timestamped backup directory.
 
-# System detection script
-if_os () { [[ $OSTYPE == *$1* ]]; }
-if_nix () { 
-	case "$OSTYPE" in
-		*linux*|*hurd*|*msys*|*cygwin*|*sua*|*interix*) sys="gnu";;
-		*bsd*|*darwin*) sys="bsd";;
-		*sunos*|*solaris*|*indiana*|*illumos*|*smartos*) sys="sun";;
-	esac
-	[[ "${sys}" == "$1" ]];
+set -Eeuo pipefail
+
+dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+backup_dir="${DOTFILES_BACKUP_DIR:-$HOME/dotfiles_old/$(date +%Y%m%d-%H%M%S)}"
+
+case "$(uname -s)" in
+    Linux) platform_dir="linux" ;;
+    Darwin) platform_dir="mac" ;;
+    *)
+        printf 'Unsupported operating system: %s\n' "$(uname -s)" >&2
+        exit 1
+        ;;
+esac
+
+link_file() {
+    local source=$1 destination=$2
+
+    if [[ -e "$destination" || -L "$destination" ]]; then
+        if [[ "$destination" -ef "$source" ]]; then
+            printf 'Already linked: %s\n' "$destination"
+            return
+        fi
+
+        mkdir -p "$backup_dir"
+        mv "$destination" "$backup_dir/$(basename "$destination")"
+        printf 'Backed up %s to %s\n' "$destination" "$backup_dir"
+    fi
+
+    mkdir -p "$(dirname "$destination")"
+    ln -s "$source" "$destination"
+    printf 'Linked %s -> %s\n' "$destination" "$source"
 }
-#
 
-echo "You are running $OSTYPE"
-
-########## Variables
-
-dir="$HOME/dotfiles"                                  # dotfiles directory
-olddir="$HOME/dotfiles_old"                           # old dotfiles backup directory
-os_specific_files="tmux.conf bashrc config.fish zshrc" # list of files/folders to symlink in homedir
-global_files="vimrc gitconfig zsh_plugins"                         # Any configs shared by mac and linux
-
-##########
-
-# create dotfiles_old in homedir
-echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
-mkdir -p "$olddir"
-
-# change to the dotfiles directory
-echo -n "Changing to the $dir directory ..."
-cd "$dir" || exit 1
-
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $os_specific_files; do
-	echo "Moving any existing dotfiles from ~ to $olddir"
-	mv -f "$HOME/.$file" "$olddir/"
-	echo "Creating symlink to $file in home directory."
-	if_os linux && ln -s "$dir/linux/$file" "$HOME/.$file" && echo "LINUX"
-	if_os darwin && ln -s "$dir/mac/$file" "$HOME/.$file" && echo "MAC"
+for file in tmux.conf bashrc zshrc; do
+    link_file "$dotfiles_dir/$platform_dir/$file" "$HOME/.$file"
 done
 
-for file in $global_files; do
-	echo "Moving any existing dotfiles from ~ to $olddir"
-	mv -f "$HOME/.$file" "$olddir/"
-	echo "Creating symlink to $file in home directory."
-	ln -s "$dir/global/$file" "$HOME/.$file"
+for file in vimrc gitconfig zsh_plugins; do
+    link_file "$dotfiles_dir/global/$file" "$HOME/.$file"
 done
+
+link_file "$dotfiles_dir/$platform_dir/config.fish" "$HOME/.config/fish/config.fish"
+link_file "$dotfiles_dir/global/vimrc" "$HOME/.config/nvim/init.vim"

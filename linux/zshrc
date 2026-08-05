@@ -11,13 +11,18 @@ export PATH="$HOME/.local/bin:$PATH"
 # Autoload features ftw
 autoload predict-on
 
-export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
-
-source <(antibody init)
-antibody bundle < "$HOME/.zsh_plugins"
+if (( $+commands[antibody] )); then
+    export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+    source <(antibody init)
+    [[ -r "$HOME/.zsh_plugins" ]] && antibody bundle < "$HOME/.zsh_plugins"
+fi
 
 plugins=(kubectl history-substring-search autojump git)
-source <(kubectl completion zsh)
+if (( $+commands[kubectl] )); then
+    source <(kubectl completion zsh)
+fi
+
+[[ -s "$HOME/.autojump/etc/profile.d/autojump.sh" ]] && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 
 # completion based on pretext
 bindkey "^[[A" history-beginning-search-backward
@@ -61,7 +66,9 @@ unsetopt AUTO_PUSHD
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
 
 # base16 color
-git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell" &> /dev/null
+if [[ ! -d "$HOME/.config/base16-shell/.git" ]]; then
+    git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell" &> /dev/null
+fi
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1"  ] && [ -s "$BASE16_SHELL/profile_helper.sh"  ] && eval "$("$BASE16_SHELL/profile_helper.sh")"
 
@@ -96,9 +103,9 @@ export PATH="/usr/local/opt/helm@2/bin:$PATH"
 
 alias apim="dotnet /mnt/c/Code/git/azure-api-management-devops-resource-kit/src/APIM_ARMTemplate/apimtemplate/bin/Debug/netcoreapp2.1/apimtemplate.dll"
 
-source <(kubectl completion zsh )
-
-eval "$(scmpuff init -s)"
+if (( $+commands[scmpuff] )); then
+    eval "$(scmpuff init -s)"
+fi
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
@@ -112,7 +119,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.kimi-code/bin:$PATH"
 
-source "$HOME/.env"
+[[ -r "$HOME/.env" ]] && source "$HOME/.env"
 
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"
@@ -121,7 +128,7 @@ autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
 
 # >>> railway initialize >>>
-source "$HOME/.railway/env"
+[[ -r "$HOME/.railway/env" ]] && source "$HOME/.railway/env"
 # <<< railway initialize <<<
 
 # Headless boxes: dummy DISPLAY so CLIs (Claude Code etc.) attempt xclip,
