@@ -132,9 +132,19 @@ printf '\n==> Installing tmux plugins\n'
 clone_if_missing https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
 # TPM's command-line installer reads the path from tmux's global environment.
 # `run .../tpm` sets this during normal tmux startup; establish it here because
-# the bootstrap intentionally runs before the first tmux session.
+# the bootstrap intentionally runs before the first tmux session. On a fresh
+# machine no tmux server exists yet and set-environment would fail, so keep a
+# throwaway session alive for the duration of the install.
+bootstrap_session_started=0
+if ! tmux has-session 2>/dev/null; then
+    tmux new-session -d -s __dotfiles_bootstrap
+    bootstrap_session_started=1
+fi
 tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
 "$HOME/.tmux/plugins/tpm/bin/install_plugins"
+if [[ "$bootstrap_session_started" == 1 ]]; then
+    tmux kill-session -t __dotfiles_bootstrap 2>/dev/null || true
+fi
 
 printf '\n==> Installing Vim/Neovim plugins\n'
 clone_if_missing https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
