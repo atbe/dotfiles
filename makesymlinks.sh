@@ -93,5 +93,22 @@ for entry in "${links[@]}"; do
 done
 
 printf '\nDone: %d linked, %d already ok, %d backed up.\n' "$linked" "$skipped" "$backed_up"
+
+# Best-effort: pin k9s to all namespaces for the current kube context. This is
+# per-cluster state (not a symlink), so it can only run once k9s has a config
+# for the context. Never fails the overall run.
+lock_k9s() {
+    [[ -x "$dotfiles_dir/global/k9s/lock-all-ns.sh" ]] || return 0
+    command -v kubectl >/dev/null 2>&1 || return 0
+    if $dry_run; then
+        printf '\n%s plan k9s: pin current context to all namespaces%s\n' "$c_ok" "$c_reset"
+        return 0
+    fi
+    printf '\n'
+    "$dotfiles_dir/global/k9s/lock-all-ns.sh" || \
+        printf '%s(k9s all-namespace pin skipped — run global/k9s/lock-all-ns.sh after k9s has used the context)%s\n' "$c_skip" "$c_reset"
+}
+lock_k9s
+
 $dry_run && printf 'Dry run — nothing changed.\n'
 exit 0

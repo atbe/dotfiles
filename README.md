@@ -6,7 +6,10 @@ in `linux` and `mac`.
 
 Run `./makesymlinks.sh` to link everything into `$HOME` (use `--dry-run` to
 preview). The k9s config (mouse enabled, `NODE` column hidden, pods sorted by
-age) lives in `global/k9s` and links to `~/.config/k9s`.
+age) lives in `global/k9s` and links to `~/.config/k9s`. The same run also
+pins k9s to open on all namespaces for the current kube context; re-run
+`global/k9s/lock-all-ns.sh` after connecting a new cluster (`--unlock` to
+undo).
 
 ## Linux
 
