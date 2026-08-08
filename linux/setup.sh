@@ -125,6 +125,21 @@ printf '\n==> Installing scmpuff\n'
 install_scmpuff
 require_command scmpuff
 
+printf '\n==> Installing task, k9s, kubectl\n'
+if ! command -v task >/dev/null 2>&1; then
+    curl -fsLo /tmp/task.deb "$(curl -fsSL https://api.github.com/repos/go-task/task/releases/latest \
+        | grep -o 'https://[^"]*linux_amd64\.deb')"
+    sudo dpkg -i /tmp/task.deb >/dev/null && rm /tmp/task.deb
+fi
+if ! command -v k9s >/dev/null 2>&1; then
+    curl -fsLo /tmp/k9s.deb https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb
+    sudo dpkg -i /tmp/k9s.deb >/dev/null && rm /tmp/k9s.deb
+fi
+if ! command -v kubectl >/dev/null 2>&1; then
+    curl -fsLo /tmp/kubectl "https://dl.k8s.io/release/$(curl -fsSL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    sudo install -m 0755 /tmp/kubectl /usr/local/bin/kubectl && rm /tmp/kubectl
+fi
+
 printf '\n==> Installing base16 shell\n'
 clone_if_missing https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
 
