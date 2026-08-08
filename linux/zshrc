@@ -138,3 +138,7 @@ autoload -Uz compinit && compinit -C
 # Headless boxes: dummy DISPLAY so CLIs (Claude Code etc.) attempt xclip,
 # which is shimmed in ~/.local/bin to proxy the Mac clipboard over Tailscale.
 export DISPLAY=${DISPLAY:-:0}
+
+# Depot CLI
+export DEPOT_INSTALL_DIR="$HOME/.depot/bin"
+export PATH="$DEPOT_INSTALL_DIR:$PATH"
