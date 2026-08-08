@@ -136,6 +136,11 @@ clone_if_missing https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tp
 # machine no tmux server exists yet and set-environment would fail, so keep a
 # throwaway session alive for the duration of the install.
 bootstrap_session_started=0
+# A TERM unknown to this host (e.g. xterm-ghostty over ssh) makes tmux refuse
+# to start; the bootstrap session doesn't need the real terminal anyway.
+if ! infocmp "${TERM:-dumb}" >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
 if ! tmux has-session 2>/dev/null; then
     tmux new-session -d -s __dotfiles_bootstrap
     bootstrap_session_started=1
