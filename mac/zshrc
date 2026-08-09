@@ -214,3 +214,7 @@ export PATH="$HOME/.raindrop/bin:$PATH"
 
 # Load untracked local secrets (file is gitignored / outside the repo)
 [ -f "$HOME/.secrets.zsh" ] && source "$HOME/.secrets.zsh"
+
+# Terminals we use all support 24-bit color, but COLORTERM is not
+# forwarded over ssh/mosh; advertise it unless the terminal already did.
+export COLORTERM=${COLORTERM:-truecolor}
