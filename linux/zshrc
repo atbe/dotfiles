@@ -152,15 +152,19 @@ export COLORTERM=${COLORTERM:-truecolor}
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
 
-# grok cannot detect terminal light/dark through tmux+mosh; ask the laptop's
-# clipboard bridge for the current macOS appearance instead. Falls back to
-# grok's default (dark) when the laptop is unreachable.
+# grok cannot detect terminal light/dark through tmux+mosh (its theme="auto"
+# probe dies at mosh), so ask the laptop's clipboard bridge for the current
+# macOS appearance and pin the matching theme in grok's config before launch.
+# Leaves the config untouched when the laptop is unreachable.
 grok() {
-  local _theme
+  local _theme _want
   _theme=$(curl -sf -m 1 -H "X-Clip-Token: $(cat "$HOME/.clip-token" 2>/dev/null)" http://100.113.99.71:7599/theme 2>/dev/null)
-  if [[ "$_theme" == "light" ]]; then
-    command grok --light "$@"
-  else
-    command grok "$@"
+  case "$_theme" in
+    light) _want="grokday" ;;
+    dark)  _want="groknight" ;;
+  esac
+  if [[ -n "$_want" && -f "$HOME/.grok/config.toml" ]]; then
+    sed -i.bak -E "s/^theme = \".*\"/theme = \"$_want\"/" "$HOME/.grok/config.toml" && rm -f "$HOME/.grok/config.toml.bak"
   fi
+  command grok "$@"
 }
