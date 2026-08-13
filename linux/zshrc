@@ -163,8 +163,15 @@ grok() {
     light) _want="grokday" ;;
     dark)  _want="groknight" ;;
   esac
-  if [[ -n "$_want" && -f "$HOME/.grok/config.toml" ]]; then
-    sed -i.bak -E "s/^theme = \".*\"/theme = \"$_want\"/" "$HOME/.grok/config.toml" && rm -f "$HOME/.grok/config.toml.bak"
+  local _cfg="$HOME/.grok/config.toml"
+  if [[ -n "$_want" && -f "$_cfg" ]]; then
+    if grep -q "^theme = " "$_cfg"; then
+      sed -i -E "s/^theme = \".*\"/theme = \"$_want\"/" "$_cfg"
+    elif grep -q "^\[ui\]" "$_cfg"; then
+      sed -i "/^\[ui\]/a theme = \"$_want\"" "$_cfg"
+    else
+      printf '\n[ui]\ntheme = "%s"\n' "$_want" >> "$_cfg"
+    fi
   fi
   command grok "$@"
 }
