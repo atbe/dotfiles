@@ -148,3 +148,6 @@ export PATH="$DEPOT_INSTALL_DIR:$PATH"
 # Terminals we use all support 24-bit color, but COLORTERM is not
 # forwarded over ssh/mosh; advertise it unless the terminal already did.
 export COLORTERM=${COLORTERM:-truecolor}
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
