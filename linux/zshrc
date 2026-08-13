@@ -123,7 +123,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.kimi-code/bin:$PATH"
 
-[[ -r "$HOME/.env" ]] && source "$HOME/.env"
+# set -a auto-exports every variable sourced from ~/.env (so keys work
+# in child processes even without an explicit `export` prefix)
+if [[ -r "$HOME/.env" ]]; then set -a; source "$HOME/.env"; set +a; fi
 
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"
