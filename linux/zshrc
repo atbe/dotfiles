@@ -151,3 +151,16 @@ export COLORTERM=${COLORTERM:-truecolor}
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
+
+# grok cannot detect terminal light/dark through tmux+mosh; ask the laptop's
+# clipboard bridge for the current macOS appearance instead. Falls back to
+# grok's default (dark) when the laptop is unreachable.
+grok() {
+  local _theme
+  _theme=$(curl -sf -m 1 -H "X-Clip-Token: $(cat "$HOME/.clip-token" 2>/dev/null)" http://100.113.99.71:7599/theme 2>/dev/null)
+  if [[ "$_theme" == "light" ]]; then
+    command grok --light "$@"
+  else
+    command grok "$@"
+  fi
+}
