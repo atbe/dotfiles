@@ -53,6 +53,7 @@ alias k="kubectl"
 
 alias codex-openai='codex -c model_provider="openai"'
 alias codex-litellm='codex -c model_provider="litellm"'
+alias codex-sub='codex-openai'
 
 alias claude-litellm='ANTHROPIC_BASE_URL=https://lllm.inference.net ANTHROPIC_API_KEY=$LITELLM_API_KEY claude'
 
@@ -151,3 +152,4 @@ export COLORTERM=${COLORTERM:-truecolor}
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
+export PATH="/home/abe/.local/bin:$PATH"
