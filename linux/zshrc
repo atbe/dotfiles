@@ -51,8 +51,9 @@ alias ti="ls -latrTh"
 
 alias k="kubectl"
 
-alias codex-openai='codex -c model_provider="openai"'
-alias codex-litellm='codex -c model_provider="litellm"'
+alias codex-openai='command codex -c model_provider="openai"'
+alias codex-litellm='command codex -c model_provider="litellm"'
+alias codex='codex-litellm'
 alias codex-sub='codex-openai'
 
 alias claude-litellm='ANTHROPIC_BASE_URL=https://lllm.inference.net ANTHROPIC_API_KEY=$LITELLM_API_KEY claude'
