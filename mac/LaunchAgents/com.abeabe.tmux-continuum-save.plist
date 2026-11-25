@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  tmux-continuum only auto-saves when the status bar redraws, which needs an
+  attached client. This runs the same trigger on a timer so saves continue
+  while detached (e.g. after an ssh/mosh disconnect). It only fires when no
+  client is attached, so it never races the status-bar trigger (two saves in
+  the same second leave resurrect's "last" symlink dangling). continuum's own
+  interval check + lock still gate actual saves (default every 15 min).
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.abeabe.tmux-continuum-save</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>tmux has-session 2>/dev/null &amp;&amp; [ -z "$(tmux list-clients 2>/dev/null)" ] &amp;&amp; exec "$HOME/.tmux/plugins/tmux-continuum/scripts/continuum_save.sh"</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>StartInterval</key>
+  <integer>300</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <!-- continuum backgrounds the resurrect save; don't let launchd kill it -->
+  <key>AbandonProcessGroup</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/tmux-continuum-save.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/tmux-continuum-save.log</string>
+</dict>
+</plist>

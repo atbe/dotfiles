@@ -51,6 +51,15 @@ links=(
     "global/k9s/views.yaml       : .config/k9s/views.yaml"
 )
 
+# macOS LaunchAgents (e.g. tmux-continuum auto-save while no client is attached).
+if [[ "$platform" == "mac" ]]; then
+    for plist in "$dotfiles_dir"/mac/LaunchAgents/*.plist; do
+        [[ -e "$plist" ]] || continue
+        name="$(basename "$plist")"
+        links+=("mac/LaunchAgents/$name : Library/LaunchAgents/$name")
+    done
+fi
+
 linked=0 skipped=0 backed_up=0
 
 link_file() {
@@ -109,6 +118,28 @@ lock_k9s() {
         printf '%s(k9s all-namespace pin skipped — run global/k9s/lock-all-ns.sh after k9s has used the context)%s\n' "$c_skip" "$c_reset"
 }
 lock_k9s
+
+# Best-effort: (re)load linked LaunchAgents so changes take effect without a
+# logout. Never fails the overall run.
+load_launch_agents() {
+    [[ "$platform" == "mac" ]] || return 0
+    local plist name label domain="gui/$(id -u)"
+    for plist in "$dotfiles_dir"/mac/LaunchAgents/*.plist; do
+        [[ -e "$plist" ]] || continue
+        name="$(basename "$plist")"; label="${name%.plist}"
+        if $dry_run; then
+            printf '%s plan launchctl: reload %s%s\n' "$c_ok" "$label" "$c_reset"
+            continue
+        fi
+        launchctl bootout "$domain/$label" 2>/dev/null || true
+        if launchctl bootstrap "$domain" "$HOME/Library/LaunchAgents/$name" 2>/dev/null; then
+            printf '%s load %s%s\n' "$c_ok" "$label" "$c_reset"
+        else
+            printf '%s(failed to load %s: launchctl bootstrap %s ~/Library/LaunchAgents/%s)%s\n' "$c_warn" "$label" "$domain" "$name" "$c_reset"
+        fi
+    done
+}
+load_launch_agents
 
 $dry_run && printf 'Dry run — nothing changed.\n'
 exit 0
